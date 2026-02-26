@@ -1,0 +1,49 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "your-mcp-server",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-03-10",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Secrets (set via `wrangler secret put`):
+  //   LINE_CHANNEL_ID
+  //   LINE_CHANNEL_SECRET
+  //   COMMON_PASSWORD_PREFIX
+  //   COOKIE_ENCRYPTION_KEY
+
+  "vars": {
+    "SUPABASE_URL": "http://127.0.0.1:54321",
+    "SUPABASE_ANON_KEY": "YOUR_LOCAL_SUPABASE_ANON_KEY"
+  },
+
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "MCP_OBJECT",
+        "class_name": "MyMCP"
+      }
+    ]
+  },
+
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["MyMCP"]
+    }
+  ],
+
+  "kv_namespaces": [
+    {
+      "binding": "OAUTH_KV",
+      "id": "PLACEHOLDER_CREATE_WITH_wrangler_kv_namespace_create"
+    }
+  ],
+
+  "observability": {
+    "enabled": true
+  },
+
+  "dev": {
+    "port": 8788
+  }
+}
